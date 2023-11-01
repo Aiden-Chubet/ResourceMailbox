@@ -1,0 +1,19 @@
+#On MAIL01, Exchange Shell
+New-RemoteMailbox -Room -Name "Domain-66 Clinic Conf Room 071" -UserPrincipalName "email@domain.com" -OnPremisesOrganizationalUnit "OU=Resources,OU=Employees,DC=Domain,DC=local"
+
+#On regular powershell as admin
+New-PSSession -computername DC2
+Enter-PSSession DC2
+Start-ADSyncSyncCycle
+Exit-PSSession
+Import-Module ExchangeOnlineManagement
+Connect-ExchangeOnline -UserPrincipalName achubet@cmhacc.org
+
+$Identity = 'Email@domain.com'
+
+Set-CalendarProcessing -Identity $Identity -DeleteSubject $False -AddOrganizerToSubject $False -DeleteComments $False -RemovePrivateProperty $False -AddAdditionalResponse $True
+Set-CASMailbox -Identity $Identity -OWAEnabled $True
+Add-MailboxFolderPermission -Identity $Identity:\Calendar -User ZoomCalendarSync@domain.com -AccessRights Editor
+Get-CalendarProcessing -Identity $Identity | FL
+
+
