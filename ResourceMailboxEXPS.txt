@@ -7,7 +7,7 @@ Enter-PSSession DC2
 Start-ADSyncSyncCycle
 Exit-PSSession
 Import-Module ExchangeOnlineManagement
-Connect-ExchangeOnline -UserPrincipalName achubet@cmhacc.org
+Connect-ExchangeOnline -UserPrincipalName achubet@domain.com
 
 $Identity = 'Email@domain.com'
 
